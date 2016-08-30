@@ -3,9 +3,9 @@
 - JSの基本的な動作チュートリアル的なアレで作った。
 - その結果産まれたのがこのJavaScriptで作ったタイピングゲームです。
 
-## demo
+## DemoPic
 
-
+![typing.png](https://github.com/Fendo181/EndoTyping/blob/master/pic/1.png)
 ## version
 
 - ver 0.01(2016_0830)
