@@ -10,6 +10,11 @@
 <body>
     <h3>遠藤タイピング</h3>
     <p id="target"></p>
+
+    <form name="js">
+    <input type="text" name="txtbox" placeholder="入力して下さい">
+    </form>
+
     <p class="info">
         True count : <span id="score"></span>
         Miss count : <span id="miss"></span>
@@ -44,6 +49,7 @@
                 var missLabel = document.getElementById('miss');
                 var scoreLabel = document.getElementById('score');
                 var timeLabel = document.getElementById('time');
+                var txtbox = document.js.txtbox.value;
 
                 function init(){
                     currentWord = 'click to start!';
@@ -88,7 +94,6 @@
                 function setTarget(){
                     currentWord = words[Math.floor(Math.random()*words.length)];
                     target.innerHTML = currentWord;
-
                     currentLocation = 0;
                 }
 
@@ -108,6 +113,7 @@
 
                             if(currentLocation === currentWord.length){
                                 setTarget();
+                                document.js.txtbox.value="";
                             }
                         }else{
                             miss++;
