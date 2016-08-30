@@ -8,8 +8,11 @@
 ![typing.png](https://github.com/Fendo181/EndoTyping/blob/master/pic/1.png)
 ## version
 
-- ver 0.01(2016_0830)
+- ver 0.1(2016_0830)
   - 基本的な動作はok
+- ver 0.2(2016_0831)
+  - スマホ用に色々と改良
+  - 色,とかscoreとか表示できるようにした。
 
 ## todo
 
