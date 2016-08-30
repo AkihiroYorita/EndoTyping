@@ -1,0 +1,17 @@
+body{
+    /*上に枠が欲しい*/
+    padding-top: 40px;
+    font-family: 'Courier New',sans-serif;
+    text-align: center;
+}
+
+#target{
+    font-size: 48px;
+    letter-spacing:3px;
+}
+
+/*class*/
+
+.info{
+    color: #ccc;
+}

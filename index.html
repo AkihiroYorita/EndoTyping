@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>Typing! Game</title>
+    <link rel="stylesheet" type="text/css" href="mystyle.css">
+</head>
+
+<body>
+    <h3>遠藤タイピング</h3>
+    <p id="target"></p>
+    <p class="info">
+        True count : <span id="score"></span>
+        Miss count : <span id="miss"></span>
+        Remaing Time :<span id="time"></span>
+    </p>
+
+
+    <script>
+        // 即時関数で囲って安全生を高める
+        (function() {
+                'use strict';//厳しくッ判定を行う
+
+                //単語リスト
+                var words = [
+                    'test',
+                    'endo',
+                    'tanaka',
+                    'satou',
+                    'apple',
+                    'aaaaa'
+                ]
+
+                // 宣言ですね
+
+                //変数
+                var currentWord ;
+                var currentLocation ;
+                var score ;
+                var miss ;
+                var time;
+                //game が始まっているフラフ
+                var isStarted;
+                //timeを止める用のフラグ
+                var  timeId;
+
+                //ラベル
+                var target = document.getElementById('target');
+                var missLabel = document.getElementById('miss');
+                var scoreLabel = document.getElementById('score');
+                var timeLabel = document.getElementById('time');
+
+
+                //初期化
+                function init(){
+                    //変数初期化
+                    currentWord = 'click to start!';
+                    currentLocation=0;
+                    score = 0;
+                    miss =0;
+                    time = 25;
+
+                    //ラベル初期化
+                    target.innerHTML = currentWord;
+                    scoreLabel.innerHTML = score;
+                    missLabel.innerHTML = miss
+                    timeLabel.innerHTML = time;
+                    isStarted = false;
+                }
+
+                //click to startが表示され、初期設定画完了する。
+                init();
+
+
+                //timer処理
+                function updateTime(){
+                    timeId=setTimeout(function(){
+                        time--;
+                        timeLabel.innerHTML = time;
+                        if(time <=0){
+                            // alert('Game over !');
+
+                            //三項演算子
+                            var accuracy = (score + miss ) === 0 ? '0.00':((score/(score+miss))*100).toFixed(2);
+                            alert('score:'+score+'miss'+miss+'タイピング成功率'+accuracy+'%');
+                            cleraTimeout(timeId);
+                            init();
+                            return;
+                        }
+                        updateTime();
+                    },1000);
+                }
+
+
+                //clicｋされたイベントが起きる
+                window.addEventListener('click',function(){
+                    //ここでクリックしても文字が進まないように設定する。
+                    if(!isStarted){
+                        isStarted = true;
+                        setTarget();
+                        updateTime();
+                    }
+                });
+
+
+                //単語をここで選択する。
+                function setTarget(){
+                    //ランダムで数字を出力[Math.floor(Math.random()*words.length)]
+                    currentWord = words[Math.floor(Math.random()*words.length)];
+                    target.innerHTML = currentWord;
+                    //位置をリセットする。
+                    currentLocation = 0;
+                }
+                // 押したキーのイベント判定
+                window.addEventListener('keyup', function(e) {
+                        if(!isStarted){
+                            return;
+                        }
+                        // e.keyCode
+                        //console.log(String.fromCharCode(e.keyCode));
+                        //toUpperCaseで大文字と一致させる。
+                        //正解の場合
+                        if (String.fromCharCode(e.keyCode) === currentWord[currentLocation].toUpperCase()){
+                            currentLocation++; //一文字進める
+                            var placeholder = '';
+                            for (var i=0; i<currentLocation; i++){
+                                placeholder += '_'; //文字を消す
+                            }
+                            // currentLocationから最後の文字を減らす
+                            /*
+                             '_' を抜いた残りの部分をつけてあげればいいので
+                             currentWord.substring(currentLocation) とすると、
+                             currentLocation から最後までの文字をくっつけてくれるかと思います。
+                            */
+                            target.innerHTML = placeholder+ currentWord.substring(currentLocation);
+                            score++;
+                            scoreLabel.innerHTML =score;
+                            //次のwordに飛ぶ
+                            if(currentLocation === currentWord.length){
+                                setTarget();
+                            }
+                        // 不正解の場合
+                        }else{
+                            // console.log('miss!');
+                            miss++;
+                            missLabel.innerHTML = miss;
+                        }
+                    });
+
+                })();
+    </script>
+</body>
+
+</html>
