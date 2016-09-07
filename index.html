@@ -6,12 +6,14 @@
     <title>Typing! Game</title>
     <link rel="stylesheet" type="text/css" href="mystyle.css">
     <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <script src="nicoscreen.js"></script>
 </head>
 
 <body>
+    <div id="nicoscreen">
     <h3>遠藤タイピング</h3>
     <p id="target"></p>
-
+    </div>
     <div id="input">
     <form name="js">
     <input type="text" name="txtbox" placeholder="入力して下さい">
@@ -32,7 +34,7 @@
                 'use strict';
                 //単語リスト
                 var words = [
-                    'haysayjump',
+                    'mitani',
                     'japan',
                     'nomoto',
                     'ogata',
@@ -62,6 +64,45 @@
                 var resultLavel = document.getElementById('result');
                 var txtbox = document.js.txtbox.value;
 
+                // niconnico流す用のコメント
+                var obj_start = {
+                		    //基本情報が設定できます
+                		"base":{
+                			color:colorGen(), //文字の色を指定します
+                			speed:"normal", //文字が流れるスピードを指定します。slow/fast/normal
+                			interval:"normal",//文字が流れる間隔を指定します。slow/fast/normal
+                			font_size:"30px", //フォントのサイズを指定します。
+                			loop:false //文字が最後まで流れた後に、繰り返すかどうか　true/false
+
+                		},
+                		//ここに、重ねるコメントを登録します。個数制限はありません。
+                		"comments":[
+                			"遠藤です。",
+                			"遠藤です。",
+                			"遠藤です。",
+                			"遠藤です。",
+                			"遠藤です。",
+                			"佐藤です。"
+                		]
+                };
+
+                // niconnico停止用のコメント
+                var obj_stop = {
+                		    //基本情報が設定できます
+                		"base":{
+                            loop:false //文字が最後まで流れた後に、繰り返すかどうか　true/false
+
+                		},
+                		//ここに、重ねるコメントを登録します。個数制限はありません。
+                		"comments":[
+                		]
+                };
+
+                // niconnicoカラーコメント
+                function colorGen(){
+                    return '#'+Math.floor(Math.random()*16777215).toString(16);
+                }
+
 
                 function init(){
                     currentWord = 'click to start!';
@@ -74,6 +115,7 @@
                     scoreLabel.innerHTML = score;
                     missLabel.innerHTML = miss
                     timeLabel.innerHTML = time;
+                    document.getElementById("time").style.color = "#ccc";
                     isStarted = false;
                     isRest = false;
 
@@ -88,8 +130,12 @@
 
                         if(time <=10){
                             document.getElementById("time").style.color = "rgb(233, 13, 13)";
+                            nicoscreen.set(obj_start);
+	                        nicoscreen.start();
                         }
                         if(time <=0){
+                            nicoscreen.set(obj_stop);
+                            nicoscreen.start();
                             endoTime();
                             // document.getElementById("result").style.display="none";
                             return;
@@ -147,6 +193,7 @@
                         }
                     });
                 })();
+
     </script>
 </body>
 </html>
